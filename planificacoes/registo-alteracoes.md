@@ -33,3 +33,8 @@ A avaliação apresentada é a prevista nos documentos. A pauta não foi configu
 - FPR: https://drive.google.com/drive/folders/1c262h8vZhZSgVp_6XRr_VnkT3OGc5wJS
 
 Ambas têm as cinco subpastas de CPW: Planificações, Conteúdos teóricos, Fichas de trabalho, Recursos visuais, Instrumentos e Critérios de Avaliação. A cópia de materiais existentes de FPR não altera o percurso dessa disciplina no Moodle.
+
+## Verificação final
+
+Site publicado e aberto: https://henriquebelo.github.io/12RC/ . Hiperligação adicionada ao início do Moodle. Confirmadas as seis unidades, os critérios dos dois semestres, as dez atividades e as nove dependências. Conferidos os ficheiros das dez subpastas de RC e FPR na Drive. Revisão visual da entrada do Moodle e do site concluída. Não foram efetuadas submissões com conta de aluno.
+

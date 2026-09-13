@@ -1,0 +1,62 @@
+[
+  {
+    "title": "Aula 01 · 01 — O que sabemos antes de alterar?",
+    "body": "<p><strong>Objetivo:</strong> distinguir um sintoma de uma causa.</p><p>O computador A abre a página do laboratório. O computador B mostra «não foi possível encontrar o servidor». Ambos estão ligados ao mesmo switch.</p><div style=\"background:#eef3fa;padding:16px\"><strong>A: página abre ✓</strong> ↔ <strong>Switch</strong> ↔ <strong>B: página não abre ?</strong></div><p>O sintoma é aquilo que observamos. A causa é a explicação que teremos de sustentar com testes. A mensagem, sozinha, não prova que o cabo está desligado ou que o DNS falhou.</p>",
+    "task": "Escreve o sintoma com precisão, propõe duas causas possíveis e indica um teste que ajude a distingui-las. Explica por que motivo não começarias por alterar várias definições ao mesmo tempo.",
+    "check": "A tua resposta separa observação, hipótese e teste? Não apresentes uma hipótese como conclusão."
+  },
+  {
+    "title": "Aula 01 · 02 — Ler IPv4, máscara, gateway e DNS",
+    "body": "<p><strong>Objetivo:</strong> atribuir uma função a cada parâmetro.</p><pre style=\"background:#eef3fa;padding:16px;white-space:pre-wrap\">PC B       192.168.10.25/24\nMáscara    255.255.255.0\nGateway    192.168.10.1\nDNS        192.168.10.10</pre><p>O endereço identifica a interface. O prefixo /24 delimita a parte de rede. Neste exemplo, a rede é 192.168.10.0 e o broadcast é 192.168.10.255. O gateway é o próximo salto usado, normalmente, para destinos fora da rede local. O DNS permite consultar nomes.</p><p>Em Windows, <code>ipconfig /all</code> permite observar estes parâmetros. Usa apenas o cenário fictício apresentado ou a máquina de laboratório indicada pelo professor.</p>",
+    "task": "Organiza os quatro parâmetros numa tabela com valor e função. Indica a gama de hosts utilizáveis e explica se 192.168.10.80 e 192.168.20.80 pertencem à mesma rede do PC B.",
+    "check": "Não confundas o servidor DNS com o gateway. A comparação depende do prefixo, não apenas do aspeto do endereço."
+  },
+  {
+    "title": "Aula 01 · 03 — Reconhecer IPv6 e dupla pilha",
+    "body": "<p><strong>Objetivo:</strong> ler IPv6 sem o confundir com IPv4.</p><pre style=\"background:#eef3fa;padding:16px;white-space:pre-wrap\">IPv4 de laboratório: 192.168.10.25/24\nIPv6 de documentação: 2001:db8:10::25/64\nExemplo link-local: fe80::25</pre><p>IPv6 usa 128 bits, representados em hexadecimal. A abreviatura :: substitui grupos consecutivos de zeros e só pode surgir uma vez no endereço. O prefixo /64 indica quantos bits pertencem à parte de rede.</p><p>Um endereço link-local tem âmbito do enlace e não é encaminhado para outras redes. IPv6 não usa broadcast. Em dupla pilha, IPv4 e IPv6 coexistem. O prefixo 2001:db8::/32 está reservado para documentação.</p>",
+    "task": "Expande 2001:db8:10::25 para oito grupos. Explica o significado de /64, identifica o exemplo link-local e responde: ver um endereço IPv6 prova que existe acesso à Internet? Justifica.",
+    "check": "A expansão tem oito grupos? Distingues ter um endereço, ter uma rota e conseguir usar um serviço?"
+  },
+  {
+    "title": "Aula 01 · 04 — Desenhar o percurso de um pedido",
+    "body": "<p><strong>Objetivo:</strong> distinguir endereço, protocolo, porta e serviço.</p><div style=\"background:#eef3fa;padding:16px\"><p><strong>1. Cliente → DNS:</strong> consulta o nome do servidor.</p><p><strong>2. Cliente → servidor:</strong> estabelece a comunicação necessária.</p><p><strong>3. Aplicação ↔ serviço:</strong> envia o pedido e recebe a resposta.</p></div><p>No nosso cenário HTTPS sobre TCP, o servidor é 192.168.20.20 e escuta na porta TCP 443. O cliente 192.168.10.25/24 usa o gateway para chegar à outra rede. O endereço identifica a interface de destino; a porta identifica o ponto de comunicação do serviço. Nem todo o tráfego web utiliza TCP: outras variantes serão tratadas mais tarde.</p>",
+    "task": "Desenha o cliente, o DNS, o gateway e o servidor. Assinala a consulta de nome e o pedido HTTPS. Explica por que razão obter uma resposta DNS não prova que o serviço web funciona.",
+    "check": "O desenho distingue a resolução do nome do acesso à aplicação? Identifica a porta como TCP 443 neste cenário."
+  },
+  {
+    "title": "Aula 01 · 05 — Construir a ficha da rede",
+    "body": "<p><strong>Objetivo:</strong> reunir uma configuração coerente e verificável.</p><p>Um laboratório usa 192.168.30.0/24. O router tem 192.168.30.1 e o servidor DNS tem 192.168.30.10. São necessários dois computadores com endereços diferentes.</p><div style=\"background:#eef3fa;padding:16px\"><strong>PC 1 + PC 2 ↔ Switch ↔ Router</strong><p>Servidor DNS ligado ao mesmo switch.</p></div><p>Seleciona endereços de host válidos, evita os endereços já atribuídos e mantém o prefixo coerente. Não atribuas o endereço de rede nem o broadcast a um computador.</p>",
+    "task": "Entrega uma tabela com os dois computadores, IPv4, máscara, gateway e DNS. Acrescenta rede, broadcast e um desenho da topologia. Propõe dois testes e os resultados esperados. Fecha com uma dúvida que queiras esclarecer.",
+    "check": "Os endereços são distintos e utilizáveis? Justificas as escolhas e distingues resultados esperados de testes realmente executados?"
+  },
+  {
+    "title": "Aula 02 · 01 — Escolher o próximo teste",
+    "body": "<p><strong>Objetivo:</strong> transformar suspeitas numa sequência de diagnóstico.</p><div style=\"background:#eef3fa;padding:16px\"><strong>Ligação → configuração → rota → nomes → serviço</strong></div><p>Esta ordem organiza a investigação, mas não substitui a interpretação dos resultados. Começa por observar a interface e a configuração. Compara depois um destino por endereço e por nome. Testa finalmente o serviço pretendido.</p><p>O <code>ping</code> verifica respostas ICMP. Um sucesso não prova que HTTPS funciona; uma ausência de resposta pode dever-se a filtragem ICMP.</p>",
+    "task": "Para «a página não abre», escreve quatro testes por ordem, indicando o que cada resultado permitiria investigar. Inclui pelo menos um teste à aplicação. Explica uma limitação do ping.",
+    "check": "Cada teste responde a uma pergunta concreta? Evita concluir «a rede está avariada» a partir de um único resultado."
+  },
+  {
+    "title": "Aula 02 · 02 — Incidente de endereçamento",
+    "body": "<p><strong>Objetivo:</strong> detetar incoerência entre o plano e a configuração.</p><pre style=\"background:#eef3fa;padding:16px;white-space:pre-wrap\">Plano: LAN 192.168.10.0/24\nRouter: 192.168.10.1\nPC B: 192.168.20.25/24\nGateway do PC B: 192.168.10.1</pre><p>O cenário contém uma única LAN e não tem rotas especiais. A interface do PC B não está na rede prevista. Antes de corrigir, regista o valor observado e compara-o com o plano.</p><p>No laboratório, a mudança deve ser mínima e o endereço escolhido deve estar livre. Alterar também DNS, máscara e router tornaria mais difícil perceber o que resolveu o problema.</p>",
+    "task": "Identifica a incoerência, propõe um endereço livre assumindo que .25 está reservado ao PC B e regista o teste a repetir após a correção. Preenche: evidência → causa provável → correção → resultado esperado.",
+    "check": "A correção respeita o plano 192.168.10.0/24? Não afirmes que executaste um teste se apenas analisaste os dados."
+  },
+  {
+    "title": "Aula 02 · 03 — Incidente de rota",
+    "body": "<p><strong>Objetivo:</strong> distinguir comunicação local de comunicação entre redes.</p><pre style=\"background:#eef3fa;padding:16px;white-space:pre-wrap\">PC B: 192.168.10.25/24\nGateway configurado: 192.168.10.254\nRouter real: 192.168.10.1\nServidor: 192.168.20.20\nTeste a 192.168.10.10: responde\nTeste a 192.168.20.20: sem resposta</pre><p>O router .1 tem as rotas necessárias e o servidor está operacional. A comunicação local funciona; isso não demonstra que exista um caminho para a outra rede. Neste cenário, .254 não é um router.</p>",
+    "task": "Explica por que o teste local pode funcionar com o gateway errado. Indica a correção mínima e dois testes posteriores: um à rede local e outro ao serviço remoto. Diz que evidência adicional procurarias se a falha continuasse.",
+    "check": "Distingues um endereço que pertence à LAN de um equipamento que realmente encaminha tráfego?"
+  },
+  {
+    "title": "Aula 02 · 04 — Incidente de resolução de nomes",
+    "body": "<p><strong>Objetivo:</strong> investigar DNS sem confundir nomes e conectividade.</p><pre style=\"background:#eef3fa;padding:16px;white-space:pre-wrap\">Servidor web correto: 192.168.20.20\nNome no laboratório: portal.rc.test\nConsulta DNS: devolve 192.168.20.99\nServiço em 192.168.20.20: confirmado operacional</pre><p>O domínio .test representa o nosso cenário de teste. A resposta DNS existe, mas o endereço devolvido não coincide com o plano. Um nome resolver não significa que resolva corretamente.</p><p>No laboratório Windows, <code>nslookup portal.rc.test</code> permite consultar a resolução. Após corrigir o registo na atividade orientada, confirma também o serviço por nome.</p>",
+    "task": "Regista o valor esperado e o recebido, a correção a propor e os testes posteriores. Explica por que motivo mudar a máscara do cliente não resolve este incidente e por que uma cache pode manter temporariamente uma resposta antiga.",
+    "check": "A conclusão apoia-se na diferença entre o plano e a resposta DNS? Inclui reteste do nome e da aplicação."
+  },
+  {
+    "title": "Aula 02 · 05 — Relatório e transferência",
+    "body": "<p><strong>Objetivo:</strong> comunicar um diagnóstico que outra pessoa consiga reproduzir.</p><div style=\"background:#eef3fa;padding:16px\"><strong>Sintoma → evidência → hipótese → teste → correção → reteste</strong></div><p>Reúne os três incidentes analisados. Distingue análise documental de execução no laboratório. Um relatório útil contém valores observados, o motivo da alteração e o resultado da verificação.</p><p><strong>Novo caso:</strong> o nome resolve para o endereço correto e o servidor responde a ICMP, mas a aplicação recusa a ligação TCP 443. Ainda é razoável concluir que a causa é DNS?</p>",
+    "task": "Entrega a síntese dos três incidentes e responde ao novo caso com duas hipóteses e um teste para cada uma. Acrescenta o que corrigiste no teu raciocínio desde a Aula 01 e uma conclusão que ainda não podes tirar.",
+    "check": "As hipóteses incluem o serviço e as regras de acesso? A tua conclusão distingue evidência, resultado esperado e incerteza?"
+  }
+]
